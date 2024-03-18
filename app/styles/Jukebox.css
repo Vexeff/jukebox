@@ -1,0 +1,391 @@
+.container {
+    min-height: 100vh;
+    min-width: 100vw;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+  
+.container_smaller {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  display: inline-block;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.jukeboxcontainer{
+  width: 100%;
+  min-width: 230px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+  justify-content: center;
+}
+
+.jukeboxpanel{
+  background-image:url('/woodpaneling.jpg');
+  position: absolute;
+  top: 26.2%;
+  bottom: 49%;
+  left: 20%;
+  right: 20%;
+  /* overflow: hidden; */
+  text-align: center;
+  justify-content: center;
+}
+
+.controlpanel{
+  border: 3px solid silver;
+  min-height: 20%;
+  max-height: 20%;
+  overflow: hidden;
+}
+
+.nowplaying{
+  position: absolute;
+  overflow: hidden;
+  border: 3px solid silver;
+  background-color: black;
+  color: green;
+  overflow: hidden;
+  min-width: 33.33%;
+}
+
+.playlistcontrols{
+  align-items: center;
+  justify-content: center;
+}
+
+.playlist-nav-btns{
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.playlist-nav-btn-back{
+  background-color: darkgreen;
+  border-radius: 4px;
+  width: 100%;
+  height: 50%;
+}
+
+.playlist-nav-btn-back + .playlist-nav-btn-back{
+  margin-left: 10%;
+}
+
+.playlist-nav-btn {
+  background-image: linear-gradient(rgb(228, 220, 220), rgb(7, 212, 7), darkgreen);
+  border-radius: 4px;
+  transform: translateY(-2px);
+  width: 100%;
+  height: 100%;
+}
+
+.playlist-nav-btn:active{
+  transform: translateY(0px);
+}
+
+.digitboard{
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.button-val{
+  padding-left: 25%;
+}
+
+.digitboard-btn{
+  width: 1.5vw;
+}
+
+.digit-btn-back{
+  background: darkred;
+  width: 65%;
+  border-radius: 2px;
+  transform: translateX(30%);
+}
+
+.digit-btn{
+  display: block;
+  background-image: linear-gradient(yellow,orange, red);
+  width: 100%;
+  color: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+.digit-btn:active {
+  transform: translateY(0px);
+}
+
+.submit-track-back{
+  background-color: darkgreen;
+  border-radius: 6px;
+  width: 10%;
+  height: 30%;
+  margin-left: 5%;
+  margin-top: 10%;
+}
+
+.clear-track-back{
+  background-color: darkred;
+  border-radius: 6px;
+  width: 10%;
+  height: 30%;
+  margin-left: 5%;
+  margin-top: 10%;
+}
+
+.submit-track{
+  background-image: linear-gradient(rgb(228, 220, 220), rgb(7, 212, 7), darkgreen);
+  border-radius: 6px;
+  transform: translateY(-2px);
+  width: 100%;
+  height: 100%;
+}
+
+.clear-track{
+  background-image: linear-gradient(rgb(228, 220, 220), rgb(201, 93, 20), darkred);
+  border-radius: 6px;
+  transform: translateY(-2px);
+  width: 100%;
+  height: 100%;
+}
+
+.clear-track:active{
+  transform: translateY(0px);
+}
+
+.submit-track:active{
+  transform: translateY(0px);
+}
+
+.songcontrols{
+  justify-content: flex-end; 
+}
+
+.control-buttons{
+  width: 100%;
+  justify-content: flex-end;
+  padding-bottom: 0px;
+}
+
+.song-nav-btn-back{
+  background-image: linear-gradient(rgb(228, 220, 220), rgb(7, 212, 7), darkgreen);
+  border-radius: 2px;
+  width: 80%;
+  height: 100%;
+}
+
+.song-nav-btn {
+  mix-blend-mode: multiply;
+  transform: translateY(-2px);
+}
+
+.song-nav-btn:active{
+  transform: translateX(0px);
+}
+
+.genButtons{
+  height: 100%;
+  overflow: visible;
+}
+
+.knobBack{
+  height: 100%;
+  width: 100%;
+}
+
+.power-button-back{
+  border-radius: 6px;
+  height: auto;
+}
+
+.power-btn-bg{
+  border-radius: 6px;
+  height: 35%;
+  background-image: linear-gradient(#181818, darkgray);
+}
+
+.power-button {
+  mix-blend-mode: multiply;
+  justify-self: center;
+}
+
+
+.power-button:active{
+  transform: translateY(2px);
+}
+
+
+
+
+
+@counter-style pad-3 {
+  system: numeric;
+  symbols: "0" "1" "2" "3" "4" "5" "6" "7" "8" "9";
+  pad: 3 "0";
+} 
+
+
+.list-decimal { 
+  list-style-type: pad-3;
+}
+
+@keyframes load {
+  0% {
+    opacity: 0%;
+    display: none;
+  }
+  25% {
+    opacity: 0%;
+    display: none;
+  }
+  100% {
+    opacity: 100%;
+    display: block;
+  }
+}
+
+@keyframes flipLeft {
+  0% {
+    transform: translate3d(270%,0px,0px) rotateY(180deg) ;
+    opacity: 10%;
+  }
+  100% {
+    transform: translateX();
+    opacity: 100%;
+  }
+}
+
+@keyframes flipRight {
+  0% {
+    transform: translate3d(-270%,0px,0px) rotateY(-180deg) ;
+    opacity: 10%;
+  }
+  100% {
+    transform: translateX();
+    opacity: 100%;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 100%;
+  }
+  80%{
+    opacity: 20%;
+  }
+  100%{
+    opacity: 0%;
+  }
+}
+
+.left, .right, .left-back, .right-back, .left-next, .right-prev{
+  background-color: black;
+  backface-visibility: hidden;
+  width: 50%;
+  transform-style: preserve-3d;
+  pointer-events: all;
+}
+
+.right, .right-back{
+  right: 0%;
+}
+
+.left, .right{
+  z-index: 2;
+  min-height: 100%;
+  padding-bottom: 35px;
+}
+
+.left-back, .right-back{
+  position: absolute;
+  z-index: 1;
+  max-height: 100%;
+}
+
+.left-prev{
+  animation: load 2.5s 0s 1;
+}
+
+.right-prev{
+  animation: flipRight 2.5s 0s 1 forwards;
+  min-height: 100%;
+  z-index: 3;
+}
+
+.left-next{
+  animation: flipLeft 2.5s 0s 1 forwards;
+  min-height: 100%;
+  z-index: 3;
+}
+
+.right-next{
+  animation: load 2.5s 0s 1;
+}
+
+.tracklist::-webkit-scrollbar{
+  display: none;
+}
+
+.trackselector{
+  position: relative;
+  background-color: black;
+  border: 3px solid silver;
+  min-height: 80%;
+  max-height: 80%;
+  color: white;
+  overflow-y: hidden;
+}
+
+.playlistinfo{
+  padding-left: 5px;
+  width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.playlistmetas{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-size: medium;
+}
+
+.tracklist{
+  padding-left: 35px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  width: 60%;
+  text-align: left;
+  overflow-y: auto;
+}
+
+.playlistcover{
+  width: 40%;
+  padding-top: 10px;
+  padding-right: 35px;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+  
