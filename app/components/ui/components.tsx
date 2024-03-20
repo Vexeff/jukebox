@@ -49,7 +49,6 @@ export function Myheader() {
           </div>
         </div>
         <a href="/jukebox" className="-m-1.5 p-1.5">
-          <span className="sr-only">Your Company</span>
           <img className="h-8 w-auto" src="/jukebox.png" alt="" />
         </a>
         <div className="flex flex-1 justify-end">
@@ -77,7 +76,6 @@ export function Myheader() {
               </button>
             </div>
             <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto" src="/jukebox.png" alt="" />
             </a>
             <div className="flex flex-1 justify-end">
@@ -95,7 +93,7 @@ export function Myheader() {
               <a
                 key={item.name}
                 href={item.href}
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-50 hover:bg-gray-50"
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-50 hover:text-sky-700"
               >
                 {item.name}
               </a>
