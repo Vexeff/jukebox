@@ -1,25 +1,3 @@
-.container {
-  min-height: 100vh;
-  min-width: 100vw;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-}
-  
-.container_smaller {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  display: inline-block;
-  align-items: center;
-  text-align: center;
-  position: relative;
-}
-
 .jukeboxcontainer{
   width: 100%;
   min-width: 230px;
@@ -37,8 +15,8 @@
   position: absolute;
   top: 26.2%;
   bottom: 49%;
-  left: 20%;
-  right: 20%;
+  left: 17%;
+  right: 18%;
 }
 
 .controlpanel{
@@ -198,24 +176,8 @@
   justify-self: center;
 }
 
-
 .power-button:active{
   transform: translateY(2px);
-}
-
-
-
-
-
-@counter-style pad-3 {
-  system: numeric;
-  symbols: "0" "1" "2" "3" "4" "5" "6" "7" "8" "9";
-  pad: 3 "0";
-} 
-
-
-.list-decimal { 
-  list-style-type: pad-3;
 }
 
 @keyframes load {
@@ -342,7 +304,7 @@
 }
 
 .tracklist{
-  padding-left: 35px;
+  padding-left: 30px;
   padding-right: 15px;
   padding-top: 10px;
   padding-bottom: 30px;
@@ -367,8 +329,6 @@
 
 .coinslot-btn-back{
   background-color: rgb(36, 32, 32);
-  /* background-color: #836a4a; */
-  /* background-image: linear-gradient(315deg, #a38560 0%, #e0d4ae 74%); */
   position: absolute;
   border-radius: 50%;
   height: 21%;
@@ -396,7 +356,6 @@
   height: 70%;
   width: 70%;
 }
-
 
 @media (max-width: 600px) {
   .grid {

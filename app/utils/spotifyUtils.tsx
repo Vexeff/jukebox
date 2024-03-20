@@ -194,8 +194,17 @@ export async function queueTrack(playlistId: string, trackIndex: string, token:s
   let trackInd = Number(trackIndex)-1 //indexing correction
   const { 'tracks': trackData } = await getPlaylist(token, playlistId);
   const tracks: trackData[] = trackData.items;
-  const trackUri: string = tracks[trackInd].track.uri
-  console.log('Got uri: ', trackUri)
+
+  let trackUri: string = ''
+
+  if (tracks[trackInd]){
+    trackUri = tracks[trackInd].track.uri
+    console.log('Got uri: ', trackUri)
+  }else{
+    console.log('Track not found.')
+    return(false)
+  }
+  
 
   fetch(`https://api.spotify.com/v1/me/player/queue?uri=${trackUri}`, {
           method: 'POST',
@@ -204,8 +213,11 @@ export async function queueTrack(playlistId: string, trackIndex: string, token:s
           }
       }).then(response => {
           if (!response.ok) {
-              throw new Error('Network response was not ok'); // Handle non-200 responses
-          }
-          console.log(`Response was okay. Queued ${trackUri}.`)
+            console.log('Network response was not ok.')
+            return(false)
+          }else{
+            console.log(`Queue successful. Queued ${trackUri}.`)
+            return(true)
+          }  
       })
 }
