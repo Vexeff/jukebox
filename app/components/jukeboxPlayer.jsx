@@ -1,14 +1,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
-import styles from '../../styles/Jukebox.css';
+import styles from '../styles/Jukebox.css';
 import Image from "next/image"
 import jukeboxImg from '/public/jukebox-main.png'
 import Marquee from 'react-fast-marquee';
-import { digitBoard, transferPlayback, findTrack, changeVolume } from './jukeboxUtils'
-import { getPlaylists, BuildPlaylistCard } from '@/app/utils/playlist';
+import digitBoard from '../utils/jukeboxUtils'
+import  getPlaylists, { BuildPlaylistCard, transferPlayback, queueTrack } from '@/app/utils/spotifyUtils';
 import { Knob } from "react-rotary-knob";
-import knobSkin from '../ui/knobskin'
+import knobSkin from './ui/knobskin'
 
 const track = {
     name: "",
@@ -120,7 +120,7 @@ export const JukeboxPlayer = (token) => {
                     setDigitData('')
                 }, 2000);
             }else{
-            findTrack(playlists[Number(playlistIndex)].id, trackIndex, token)
+            queueTrack(playlists[Number(playlistIndex)].id, trackIndex, token)
             setDigitData('Queue successful. You have ' + (coins-1) + ' requests left.')
             setCoins((prevCoins) => prevCoins - 1)
             setTimeout(() => {

@@ -1,6 +1,5 @@
 'use client'
 
-import Link from "next/link";
 import { UIEventHandler, useEffect, useState } from "react";
 
 export interface SpotifyPlaylist{
@@ -75,7 +74,7 @@ export async function getPlaylist(token: string, playlistId: string){
 }
 
 // using await
-export async function getPlaylists(token: string){
+export default async function getPlaylists(token: string){
   const response = await fetch(`https://api.spotify.com/v1/me/playlists?limit=50`, {
       headers: {
           Authorization: `Bearer ${token}`
@@ -89,32 +88,6 @@ export async function getPlaylists(token: string){
   let { total, 'items': playlists } = data;
   
   return {total, playlists};
-}
-
-/**
- * 
- * @param {*} playlistdata 
- * 
- * Returns array of data converted into array of playlistData format as defined
- * in components.tsx
- * 
- */
-export function convertPlaylistsData(playlistsdata: SpotifyPlaylist[]){
-    if (playlistsdata.length === 0){
-      return [] as playlistData[]
-    }
-    console.log('IMPLEMENT MULTI-PAGE SCROLL OPTION FOR PLAYLISTS.')
-    
-    const newPlaylistsdata = playlistsdata.map((item) => {
-
-        let { 'id': id, 'images': artwork, 'name': title, 'tracks': tracks} = item
-        let { 'total': trackCount } = tracks
-        let artwork_url = artwork[0].url
-
-        return {id, title, trackCount, artwork_url}
-    })
-    
-    return newPlaylistsdata
 }
 
 export function BuildPlaylistCard(
@@ -197,25 +170,42 @@ export function BuildPlaylistCard(
   );
 }
 
-export function PlaylistView(files: playlistData[]){
-  if (files.length === 0){
-    return <></>
-  }
-  return (
-    <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-      {files.map((file) => (
-        <li key={file.id} className="relative">
-          <div className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-            <Link href = {`/jukebox/${file.id}`}>
-            <img src={file.artwork_url} alt="" className="pointer-events-none object-cover group-hover:opacity-75" />
-            </Link>
-          </div>
-          <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">{file.title}</p>
-          <p className="pointer-events-none block text-sm font-medium text-gray-500">{file.trackCount}</p>
-        </li>
-      ))}
-    </ul>
-  )
+export async function transferPlayback(token: string, deviceId: string) {
+  fetch('https://api.spotify.com/v1/me/player', {
+          method: 'PUT',
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+          'device_ids': [
+              `${deviceId}`
+          ]
+      })
+      }).then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok'); // Handle non-200 responses
+          }
+          console.log('Response was okay. Transferred playback.')
+      })
 }
 
-export default convertPlaylistsData;
+export async function queueTrack(playlistId: string, trackIndex: string, token:string){
+
+  let trackInd = Number(trackIndex)-1 //indexing correction
+  const { 'tracks': trackData } = await getPlaylist(token, playlistId);
+  const tracks: trackData[] = trackData.items;
+  const trackUri: string = tracks[trackInd].track.uri
+  console.log('Got uri: ', trackUri)
+
+  fetch(`https://api.spotify.com/v1/me/player/queue?uri=${trackUri}`, {
+          method: 'POST',
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      }).then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok'); // Handle non-200 responses
+          }
+          console.log(`Response was okay. Queued ${trackUri}.`)
+      })
+}
