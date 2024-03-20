@@ -41,6 +41,8 @@ export const JukeboxPlayer = (token) => {
     const [digitData, setDigitData] = useState('')
     const [volume, setVolume] = useState(0.2)
     const [volumeDisplay, setVolumeDisplay] = useState('')
+    const [coins, setCoins] = useState(0)
+    const [coinsDisplay, setCoinsDisplay] = useState(coins)
     const leftBackRef = useRef();
     const rightBackRef = useRef();
     
@@ -55,10 +57,14 @@ export const JukeboxPlayer = (token) => {
     }
 
     function loadJukebox(){
-        if (!is_active && is_paused && deviceId){
-            transferPlayback(token, deviceId)
-            fetchPlaylists()
-        } 
+        if (is_paused && deviceId){
+            if (!is_active){
+                transferPlayback(token, deviceId)
+                fetchPlaylists()
+            }else{
+                setCoins((prevCoins) => prevCoins + 1)
+            }
+        }
     }
 
     function nextPlaylist() {
@@ -93,18 +99,6 @@ export const JukeboxPlayer = (token) => {
         }
     }
 
-    function volumeUp(){
-        if (is_active && deviceId){
-            setVolume((prevNumber) => prevNumber < 100 ? prevNumber + 1 : prevNumber)
-        }
-    }
-
-    function volumeDown(){
-        if (is_active && deviceId){
-            setVolume((prevNumber) => prevNumber > 1 ? prevNumber - 1 : prevNumber)
-        }
-    }
-
     const handleScrollLeft = (scroll) => {
         leftBackRef.current.scrollTop = scroll.target.scrollTop;
     };
@@ -132,15 +126,20 @@ export const JukeboxPlayer = (token) => {
                 setTimeout(() => {
                     setDigitData('')
                 }, 2000);
+            }else if (coins < 1){
+                setDigitData('Insufficient funds.')
+                setTimeout(() => {
+                    setDigitData('')
+                }, 2000);
             }else{
             findTrack(playlists[Number(playlistIndex)].id, trackIndex, token)
-            setDigitData('Queue successful.')
+            setDigitData('Queue successful. You have ' + (coins-1) + ' requests left.')
+            setCoins((prevCoins) => prevCoins - 1)
             setTimeout(() => {
                 setDigitData('')
             }, 2000);
             }
         }
-        
     }
 
     function handleVolume(newVol){
@@ -157,7 +156,7 @@ export const JukeboxPlayer = (token) => {
     }
 
     function handleNumberChange(newNumber) {
-        if ((digitData != 'Jukebox is disconnected.') && (digitData != 'Queue succesful.') && (digitData != 'Invalid request.'))
+        if ((digitData != 'Jukebox is disconnected.') && (digitData != 'Queue successful.') && (digitData != 'Invalid request.'))
             setDigitData((prevNumber) => prevNumber + newNumber)
         };
 
@@ -220,32 +219,25 @@ export const JukeboxPlayer = (token) => {
 
     useEffect(() => {
         if (playlists){
-            if (index == 0){
+            if (index >= 0 && index < total){
                 setleftPlaylist(playlists[index])
-                setleftbackPlaylist(playlists[index])
-                setrightPlaylist(playlists[index+1])
-                setrightbackPlaylist(playlists[index+1])
+                setTimeout(() => {
+                    setleftbackPlaylist(playlists[index])
+                }, 2000);
             }else{
-                if (index >= 0 && index < total){
-                    setleftPlaylist(playlists[index])
-                    setTimeout(() => {
-                        setleftbackPlaylist(playlists[index])
-                    }, 2000);
-                }else{
-                    setleftPlaylist([])
-                    setleftbackPlaylist([])
-                }
-                if (index < total + 1){
-                    setrightPlaylist(playlists[index+1])
-                    setTimeout(() => {
-                        setrightbackPlaylist(playlists[index+1])
-                    }, 2000);
-                    
-                }else{
-                    setrightPlaylist([])
-                    setrightbackPlaylist([])
-                }
+                setleftPlaylist([])
+                setleftbackPlaylist([])
             }
+            if (index < total + 1){
+                setrightPlaylist(playlists[index+1])
+                setTimeout(() => {
+                    setrightbackPlaylist(playlists[index+1])
+                }, 2000);
+                
+            }else{
+                setrightPlaylist([])
+                setrightbackPlaylist([])
+            } 
         }
     }, [index, playlists])
 
@@ -254,6 +246,13 @@ export const JukeboxPlayer = (token) => {
             player.setVolume(volume/100)
         }
     }, [volume])
+
+    useEffect(() => {
+        setCoinsDisplay(coins)
+        setTimeout(() => {
+            setCoinsDisplay('')
+        }, 1000);
+    }, [coins])
 
     return (
         <>
@@ -305,9 +304,11 @@ export const JukeboxPlayer = (token) => {
                        
                         <div className='nowplaying-container flex flex-shrink-0 basis-1/3 justify-center items-center'>
                             {
-                                (digitData || volumeDisplay) ? 
+                                (digitData || volumeDisplay || coinsDisplay) ? 
                                 (volumeDisplay) ?  
                                 'Volume: '+Math.round(volumeDisplay)+'%' :
+                                (coinsDisplay) ? 
+                                'Coins: '+coinsDisplay :
                                 digitData :
                                 <Marquee direction='right' className='nowplaying flex-shrink-0 basis-1/3'>
                                     <div className='nowplaying text-left flex flex-col'>
@@ -338,31 +339,16 @@ export const JukeboxPlayer = (token) => {
                             </div>
                         </div>
                         
-                        <div className='genButtons flex flex-row basis-1/6 place-items-center'>
-                            <div className="flex basis-4/5 knobBack">
-                                <Knob
-                                    style={{ width: "100%", height: "100%" }}
-                                    min={0}
-                                    max={100}
-                                    value={volume}
-                                    preciseMode={false}
-                                    onChange={handleVolume}
-                                    skin={knobSkin}
-                                />
-                            </div>
-                            <div className='flex power-button-back basis-1/5 justify-center items-end'>
-                                <div className='power-btn-bg justify-center items-center flex'>
-                                    <button className='flex power-button justify-center align-middle' onClick={loadJukebox}>
-                                        <Image 
-                                            src={'/powerbutton.png'} 
-                                            width="20"
-                                            height="20"
-                                            className="w-auto h-auto"
-                                            alt='powerbtn'
-                                        />
-                                    </button> 
-                                </div>
-                            </div> 
+                        <div className="flex basis-1/6 knobBack place-items-center">
+                            <Knob
+                                style={{ width: "100%", height: "100%" }}
+                                min={0}
+                                max={100}
+                                value={volume}
+                                preciseMode={false}
+                                onChange={handleVolume}
+                                skin={knobSkin}
+                            />
                         </div>
                     </div>
 
@@ -383,6 +369,10 @@ export const JukeboxPlayer = (token) => {
                             priority="true"
                             alt='coinslot'
                         />
+                        <div className='coinslot-btn-back flex place-content-center'>
+                            <button className='coinslot-btn flex self-center'  onClick={loadJukebox}>
+                            </button>
+                        </div>
                 </div>
             </div>
          </>

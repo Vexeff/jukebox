@@ -182,11 +182,6 @@
   transform: translateY(0px);
 }
 
-.knobBack{
-  height: 100%;
-  width: 100%;
-}
-
 .power-button-back{
   border-radius: 6px;
   height: auto;
@@ -366,6 +361,40 @@
   position: absolute;
   bottom: 41%;
   right: 11%;
+  overflow: hidden;
+  min-width: 34%;
+}
+
+.coinslot-btn-back{
+  background-color: rgb(36, 32, 32);
+  /* background-color: #836a4a; */
+  /* background-image: linear-gradient(315deg, #a38560 0%, #e0d4ae 74%); */
+  position: absolute;
+  border-radius: 50%;
+  height: 21%;
+  width: 7%;
+  bottom: 4%;
+  right: 9.25%;
+  border: 0px solid rgb(36, 32, 32);
+}
+
+.coinslot-btn{
+  background-color: #a38560;
+  background-image: linear-gradient(315deg, #a38560 0%, #e0d4ae 74%);
+  height: 80%;
+  width: 80%;
+  border-radius: 50%;
+}
+
+.coinslot-btn-back:active{
+  border-width: 1px;
+}
+
+.coinslot-btn:active{
+  background-color: #a38560;
+  background-image: linear-gradient(315deg, #846c4e 0%, #b5ac8f 74%);
+  height: 70%;
+  width: 70%;
 }
 
 
