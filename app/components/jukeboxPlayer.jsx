@@ -323,7 +323,7 @@ export const JukeboxPlayer = (token) => {
                                 (coinsDisplay) ? 
                                 'Coins: '+coinsDisplay :
                                 digitData :
-                                <Marquee direction='right' className='nowplaying flex-shrink-0 basis-1/3'>
+                                <Marquee direction='left' className='nowplaying flex-shrink-0 basis-1/3'>
                                     <div className='nowplaying text-left flex flex-col'>
                                         <div className='nowplaying text-left flex flex-row'> 
                                             {is_active && <div>&nbsp;Now playing:&nbsp;</div>} { current_track.artists[0].name } 
@@ -331,7 +331,7 @@ export const JukeboxPlayer = (token) => {
                                             { current_track.name }
                                         </div>
                                         <div className='text-left instructions'>
-                                            {is_active && <div>To play songs, enter playlist number followed by track number&nbsp;&nbsp;</div>}
+                                            {is_active && <div>To play songs, enter playlist number followed by track number.&nbsp;&nbsp;</div>}
                                         </div> 
                                     </div>
                                 </Marquee>
