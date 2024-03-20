@@ -147,9 +147,6 @@ export const JukeboxPlayer = (token) => {
         }else{
             setVolume(newVol)
             setVolumeDisplay(newVol)
-            setTimeout(() => {
-                setVolumeDisplay('')
-            }, 1000);
         }
     }
 
@@ -249,9 +246,13 @@ export const JukeboxPlayer = (token) => {
     useEffect(() => {
         if (!digitData){
             setCoinsDisplay(coins)
-            setTimeout(() => {
+            let timeoutId = setTimeout(() => {
                 setCoinsDisplay('')
             }, 1000);
+
+            return () => {
+                clearTimeout(timeoutId);
+            };
         }
     }, [coins])
 
@@ -359,6 +360,7 @@ export const JukeboxPlayer = (token) => {
                                 value={volume}
                                 preciseMode={false}
                                 onChange={handleVolume}
+                                onEnd={()=>{setTimeout(() => {setVolumeDisplay('')}, 500);}}
                                 skin={knobSkin}
                             />
                         </div>
