@@ -372,7 +372,7 @@ export const JukeboxPlayer = (token) => {
                             alt='coinslot'
                         />
                         <div className='coinslot-btn-back flex place-content-center' onClick={handleCoinButton} >
-                            <button className='coinslot-btn flex self-center'  onClick={handleCoinButton}>
+                            <button className='coinslot-btn flex self-center'>
                             </button>
                         </div>
                 </div>
