@@ -104,7 +104,7 @@ export const JukeboxPlayer = (token) => {
         setDigitData('')
     }
 
-    async function handleQueue(){
+    function handleQueue(){
         if (digitData){
             let playlistIndex = digitData.substring(0,2)
             let trackIndex = digitData.substring(2,5)
@@ -121,20 +121,21 @@ export const JukeboxPlayer = (token) => {
                     setDigitData('')
                 }, 2000);
             }else{
-                const queueRes = queueTrack(playlists[Number(playlistIndex)].id, trackIndex, token)
-
-                if (queueRes){
-                    setDigitData('Queue successful. You have ' + (coins-1) + ' requests left.')
-                    setCoins((prevCoins) => prevCoins - 1)
-                    setTimeout(() => {
-                        setDigitData('')
-                    }, 2000);
-                }else{
-                    setDigitData('Queue unsuccessful. Try Again.')
-                    setTimeout(() => {
-                        setDigitData('')
-                    }, 2000);
-                }
+                queueTrack(playlists[Number(playlistIndex)].id, trackIndex, token).then(response => 
+                {   console.log('response: ', response)
+                    if (response){
+                        setDigitData('Queue successful. You have ' + (coins-1) + ' requests left.')
+                        setCoins((prevCoins) => prevCoins - 1)
+                        setTimeout(() => {
+                            setDigitData('')
+                        }, 2000);
+                    }else{
+                        setDigitData('Queue unsuccessful. Try Again.')
+                        setTimeout(() => {
+                            setDigitData('')
+                        }, 2000);
+                    }
+                })   
             }  
         }
     }

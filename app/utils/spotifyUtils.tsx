@@ -206,18 +206,18 @@ export async function queueTrack(playlistId: string, trackIndex: string, token:s
   }
   
 
-  fetch(`https://api.spotify.com/v1/me/player/queue?uri=${trackUri}`, {
+  const response = await fetch(`https://api.spotify.com/v1/me/player/queue?uri=${trackUri}`, {
           method: 'POST',
           headers: {
               Authorization: `Bearer ${token}`
           }
-      }).then(response => {
-          if (!response.ok) {
-            console.log('Network response was not ok.')
-            return(false)
-          }else{
-            console.log(`Queue successful. Queued ${trackUri}.`)
-            return(true)
-          }  
       })
+  
+  if (!response.ok) {
+    console.log('Network response was not ok.')
+    return(Promise.resolve(false))
+  }else{
+    console.log(`Queue successful. Queued ${trackUri}.`)
+    return(Promise.resolve(true))
+  }
 }
