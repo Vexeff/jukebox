@@ -1,5 +1,6 @@
 .container {
   background-image: url('/bg-bar.png');
+  background-repeat: repeat-y;
   min-height: 100vh;
   min-width: 1024px;
   padding: 0 0.5rem;

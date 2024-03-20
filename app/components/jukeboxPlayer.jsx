@@ -331,26 +331,26 @@ export const JukeboxPlayer = (token) => {
                                             { current_track.name }
                                         </div>
                                         <div className='text-left instructions'>
-                                            {is_active && <div>To play songs, enter playlist number followed by track number.&nbsp;&nbsp;</div>}
+                                            {is_active && <div>To play songs, enter playlist number followed by track number&nbsp;&nbsp;</div>}
                                         </div> 
                                     </div>
                                 </Marquee>
                             }
                         </div>                      
 
-                        <div className='jukeboxcontrols basis-1/3 flex flex-row place-content-center '>
+                        <div className='jukeboxcontrols basis-1/3 flex flex-row place-content-center items-center'>
                                 {digitBoard(handleNumberChange)}
                             <div className='queue-buttons flex flex-col items-center'>
                                 <div className='queue-btn flex place-content-center items-end'>
                                     <div className='submit-track-back flex place-content-center'>
-                                        <button className='flex submit-track place-content-center text-xs/6' type="submit" onClick={handleQueue}>
+                                        <button className='flex submit-track place-content-center text-[12px] items-center' type="submit" onClick={handleQueue}>
                                             OK
                                         </button>
                                     </div>
                                 </div>
                                 <div className='queue-btn flex place-content-center items-start'>
                                     <div className='clear-track-back flex place-content-center'>
-                                        <button className='flex clear-track place-content-center text-xs/6' type="submit" onClick={handleClearQueue}>
+                                        <button className='flex clear-track place-content-center text-[12px] items-center' type="submit" onClick={handleClearQueue}>
                                             RESET
                                         </button>
                                     </div>
