@@ -57,7 +57,7 @@ export const JukeboxPlayer = (token) => {
     }
 
     function loadJukebox(){
-        if (is_paused && deviceId){
+        if (deviceId){
             if (!is_active){
                 transferPlayback(token, deviceId)
                 fetchPlaylists()
