@@ -1,6 +1,6 @@
 'use client'
 
-import { BuildPlaylistCard, getPlaylist, getPlaylists, playlistData, playlistsData, SpotifyPlaylist, tracklistData, trackData } from '@/app/utils/playlist';
+import { getPlaylist, trackData } from '@/app/utils/playlist';
 
 export async function getPlaybackState(token: string) {
     fetch("https://api.spotify.com/v1/me/player", {                    

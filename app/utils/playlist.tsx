@@ -1,10 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import Image from "next/image"
-import { stringify } from 'querystring';
 import { UIEventHandler, useEffect, useState } from "react";
-import { useSpring, animated } from '@react-spring/web';
 
 export interface SpotifyPlaylist{
   id: string,

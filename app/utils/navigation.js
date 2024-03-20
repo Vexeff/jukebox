@@ -3,6 +3,4 @@ const navigationOptions = [
     { name: 'Jukebox', href: '/jukebox'},
   ]
 
-
-
 export default navigationOptions;
