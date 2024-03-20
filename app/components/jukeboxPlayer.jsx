@@ -75,19 +75,19 @@ export const JukeboxPlayer = (token) => {
     }
 
     function nextTrack(){
-        if (!is_paused){
+        if (is_active){
             player.nextTrack()
         }
     }
 
     function prevTrack(){
-        if (!is_paused){
+        if (is_active){
             player.previousTrack()
         }
     }
 
     function togglePlay(){
-        if (is_active && deviceId){
+        if (is_active){
             player.togglePlay()
         }
     }
