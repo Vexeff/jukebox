@@ -1,6 +1,5 @@
 const navigationOptions = [
-    { name: 'Home', href: '/' },
-    { name: 'Jukebox', href: '/jukebox'},
-  ]
+    { name: 'Home', href: '/' }
+    ]
 
 export default navigationOptions;

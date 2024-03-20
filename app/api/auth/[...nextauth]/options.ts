@@ -20,14 +20,12 @@ declare module 'next-auth/jwt' {
 }
 
 const scopes = [
-    "user-read-email",
     "user-read-private",
     "playlist-read-private",
     "playlist-read-collaborative",
     "user-read-currently-playing",
     "user-read-playback-state",
     "user-modify-playback-state",
-    "app-remote-control",
     "streaming"
 ].join(",")
 
