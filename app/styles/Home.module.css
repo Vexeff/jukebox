@@ -158,6 +158,11 @@ a.login:hover, a.login:focus {
     text-align: center;
 }
 
+.rani{
+  height: 100%;
+  background-color: yellow;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

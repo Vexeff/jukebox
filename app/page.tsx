@@ -8,16 +8,21 @@ export default function Home() {
 
   return (
     <div>
-      <main className={styles.container}>
+      <main className={`${styles.container}`}>
+        <div className='flex-col flex absolute top-[10%]'>
 
-        <h2 className={`${styles.title}  text-gray-950`}>
-          Happy (very belated) Valentine&apos;s Day<br />
-        </h2>
-        
-        {Button({ 
-          buttontext: 'Müzik kutusunu aç', 
-          onClick: () => signIn('spotify', { callbackUrl: '/jukebox' })
-        })}
+          <h2 className={`${styles.title} text-[#c65e5b] flex place-content-center`}>
+            Happy (very belated) Valentine&apos;s Day<br />
+          </h2>
+          
+          <div className='flex place-content-center'>
+            {Button({ 
+              buttontext: 'Müzik kutusunu aç', 
+              onClick: () => signIn('spotify', { callbackUrl: '/jukebox' })
+            })}
+           </div>
+
+        </div>  
         
       </main>
 
