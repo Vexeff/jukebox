@@ -17,17 +17,20 @@ export const Button = (data: ButtonData)  => {
     <button
         type="button"
         onClick={data.onClick}
-        className="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        className="rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >{data.buttontext}</button>
   )
 }
 
 export function Myheader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+  /* overflow: hidden; /* Keep this line 
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;*/
   return (
-    <header className="bg-gray-900 min-w-1024 min-w-[1024px]">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <header className="min-w-[1024px] w-full bg-black z-10 absolute opacity-0 duration-0 hover:opacity-100 hover:relative">
+      <nav className="flex mx-auto max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex flex-1">
           <div className="hidden lg:flex lg:gap-x-12">
             {navigationOptions.map((item) => (

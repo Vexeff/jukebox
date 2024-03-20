@@ -10,8 +10,8 @@ export default function Home() {
     <div>
       <main className={styles.container}>
 
-        <h2 className={styles.title}>
-          Happy (Very belated) Valentine&apos;s Day<br />
+        <h2 className={`${styles.title}  text-gray-950`}>
+          Happy (very belated) Valentine&apos;s Day<br />
         </h2>
         
         {Button({ 

@@ -338,16 +338,22 @@ export const JukeboxPlayer = (token) => {
                             }
                         </div>                      
 
-                        <div className='jukeboxcontrols basis-1/3 flex flex-row items-center justify-center'>
+                        <div className='jukeboxcontrols basis-1/3 flex flex-row place-content-center '>
                                 {digitBoard(handleNumberChange)}
-                            <div className='queue-buttons flex flex-row items-center justify-center'>
-                                <div className='submit-track-back flex items-center justify-center'>
-                                    <button className='submit-track items-center justify-center' type="submit" onClick={handleQueue}>
-                                    </button>
+                            <div className='queue-buttons flex flex-col items-center'>
+                                <div className='queue-btn flex place-content-center items-end'>
+                                    <div className='submit-track-back flex place-content-center'>
+                                        <button className='flex submit-track place-content-center text-xs/6' type="submit" onClick={handleQueue}>
+                                            OK
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className='clear-track-back flex items-center justify-center'>
-                                    <button className='clear-track items-center justify-center' type="submit" onClick={handleClearQueue}>
-                                    </button>
+                                <div className='queue-btn flex place-content-center items-start'>
+                                    <div className='clear-track-back flex place-content-center'>
+                                        <button className='flex clear-track place-content-center text-xs/6' type="submit" onClick={handleClearQueue}>
+                                            RESET
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
