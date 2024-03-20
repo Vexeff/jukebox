@@ -265,6 +265,7 @@ export const JukeboxPlayer = (token) => {
                     sizes="100vw"
                     className="w-full h-auto"
                     priority="true"
+                    loading='eager'
                     alt='jukebox'
                 />
                 <div className='jukeboxpanel'>
