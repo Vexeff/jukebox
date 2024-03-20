@@ -248,10 +248,12 @@ export const JukeboxPlayer = (token) => {
     }, [volume])
 
     useEffect(() => {
-        setCoinsDisplay(coins)
-        setTimeout(() => {
-            setCoinsDisplay('')
-        }, 1000);
+        if (!digitData){
+            setCoinsDisplay(coins)
+            setTimeout(() => {
+                setCoinsDisplay('')
+            }, 1000);
+        }
     }, [coins])
 
     return (
