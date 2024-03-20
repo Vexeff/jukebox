@@ -8,7 +8,8 @@ import Marquee from 'react-fast-marquee';
 import { stringify } from 'querystring';
 import { digitBoard, transferPlayback, findTrack, changeVolume } from './jukeboxUtils'
 import { getPlaylists, BuildPlaylistCard } from '@/app/utils/playlist';
-import VolumeKnob from './volumeKnob';
+import { Knob } from "react-rotary-knob";
+import knobSkin from '../ui/knobskin'
 
 const track = {
     name: "",
@@ -22,7 +23,7 @@ const track = {
     ]
 }
 
-export const JukeboxPlayer = (token, playlistId) => {
+export const JukeboxPlayer = (token) => {
 
     const [player, setPlayer] = useState(undefined);
     const [is_paused, setPaused] = useState(true);
@@ -39,6 +40,7 @@ export const JukeboxPlayer = (token, playlistId) => {
     const [flipState, setFlipstate ] = useState('')
     const [digitData, setDigitData] = useState('')
     const [volume, setVolume] = useState(0.2)
+    const [volumeDisplay, setVolumeDisplay] = useState('')
     const leftBackRef = useRef();
     const rightBackRef = useRef();
     
@@ -147,6 +149,10 @@ export const JukeboxPlayer = (token, playlistId) => {
             return
         }else{
             setVolume(newVol)
+            setVolumeDisplay(newVol)
+            setTimeout(() => {
+                setVolumeDisplay('')
+            }, 1000);
         }
     }
 
@@ -252,118 +258,131 @@ export const JukeboxPlayer = (token, playlistId) => {
     return (
         <>
             <div className='jukeboxcontainer'>
-                <Image src={jukeboxImg} 
-                            width="0"
-                            height="0"
-                            sizes="100vw"
-                            className="w-full h-auto"
-                            priority="true"
-                            alt='jukebox'
+                <Image 
+                    src={jukeboxImg} 
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    className="w-full h-auto"
+                    priority="true"
+                    alt='jukebox'
                 />
                 <div className='jukeboxpanel'>
-                    <div className='controlpanel align-baseline	flex flex-row'>
-                        <div className='playlistcontrols flex flex-col basis-1/6'>
-                            <div className='playlist-nav-btns flex flex-row place-items-center'>
-                                <div className='playlist-nav-btn-back'>
-                                    <button className='playlist-nav-btn' onClick={prevPlaylist}>
-                                        &lt;
+                    <div className='controlpanel flex flex-row'>
+                        <div className='playlistcontrols flex flex-col basis-1/6 place-content-end'>
+                            <div className='playlist-nav-btns h-full flex flex-row place-content-center self-center'>
+                                <div className='playlist-nav-btn-back place-content-center self-center'>
+                                    <button className='playlist-nav-btn place-content-center' onClick={prevPlaylist}>
+                                        ◄
                                     </button>
                                 </div>
-                                <div className='playlist-nav-btn-back'>
+                                <div className='playlist-nav-btn-back self-center'>
                                     <button className='playlist-nav-btn' onClick={nextPlaylist}>
-                                        &gt;
+                                        ►
                                     </button>
                                 </div>
                             </div>
-                            <div className='control-buttons flex flex-row justify-items-center'>
-                                <div className='flex song-nav-btn-back basis-2/5 justify-center'>
-                                    <button className="song-nav-btn" onClick={prevTrack} >
-                                        &lt;&lt;
+
+                            <div className='control-buttons flex flex-row'>
+                                <div className='flex song-nav-btn-back basis-2/5 place-content-center'>
+                                    <button className="flex song-nav-btn" onClick={prevTrack} >
+                                        &#9198;
                                     </button>
                                 </div>
-                                <div className='flex song-nav-btn-back basis-1/5 justify-center'>
+                                <div className='flex song-nav-btn-back basis-1/5 place-content-center'>
                                     <button className="song-nav-btn" onClick={togglePlay} >
-                                    { is_paused ? 
-                                    <Image src={'/playbutton.jpeg'} 
-                                    width="2"
-                                    height="2"
-                                    className="w-auto h-auto"
-                                    priority="true"
-                                    alt='play'
-                                    /> : 
-                                    <Image src={'/pausebutton.jpeg'} 
-                                    width="4"
-                                    height="4"
-                                    className="w-auto h-auto"
-                                    priority="true"
-                                    alt='pause'
-                                    /> }
-                                </button>
+                                        ⏯
+                                    </button>
                                 </div>
-                                <div className='flex song-nav-btn-back basis-2/5 justify-center'>
+                                <div className='flex song-nav-btn-back basis-2/5 place-content-center'>
                                     <button className="song-nav-btn" onClick={nextTrack} >
-                                        &gt;&gt;
+                                        ⏭
                                     </button>
                                 </div> 
                             </div>
-                        
                         </div>
                        
-                       {digitData ? 
-                        <Marquee direction='right' className='flex-shrink-0 nowplaying basis-1/3'>
-                            {digitData}
-                        </Marquee> : 
-                        <Marquee direction='right' className='flex-shrink-0 nowplaying basis-1/3'>
-                            <div className='text-left flex flex-col'>
-                                <div className='text-left flex flex-row now-playing'> 
-                                    {is_active && <div>&nbsp;Now playing:&nbsp;</div>} { current_track.artists[0].name } 
-                                    {is_active && <div>&nbsp;-&nbsp;</div>} 
-                                    { current_track.name }
-                                </div>
-                                <div className='text-left instructions'>
-                                {is_active && <div>To play songs, enter playlist number followed by track number&nbsp;&nbsp;</div>}
-                                </div> 
-                            </div>
-                        </Marquee>}
+                       
+                        <div className='nowplaying-container flex flex-shrink-0 basis-1/3 justify-center items-center'>
+                            {
+                                (digitData || volumeDisplay) ? 
+                                (volumeDisplay) ?  
+                                'Volume: '+Math.round(volumeDisplay)+'%' :
+                                digitData :
+                                <Marquee direction='right' className='nowplaying flex-shrink-0 basis-1/3'>
+                                    <div className='nowplaying text-left flex flex-col'>
+                                        <div className='nowplaying text-left flex flex-row'> 
+                                            {is_active && <div>&nbsp;Now playing:&nbsp;</div>} { current_track.artists[0].name } 
+                                            {is_active && <div>&nbsp;-&nbsp;</div>} 
+                                            { current_track.name }
+                                        </div>
+                                        <div className='text-left instructions'>
+                                            {is_active && <div>To play songs, enter playlist number followed by track number&nbsp;&nbsp;</div>}
+                                        </div> 
+                                    </div>
+                                </Marquee>
+                            }
+                        </div>                      
 
-                        <div className='jukeboxcontrols basis-1/3 flex flex-row items-center'>
+                        <div className='jukeboxcontrols basis-1/3 flex flex-row items-center justify-center'>
                                 {digitBoard(handleNumberChange)}
-                            <div className='submit-track-back'>
-                                <button className='submit-track' type="submit" onClick={handleQueue}>
-                                </button>
-                            </div>
-                            <div className='clear-track-back'>
-                                <button className='clear-track' type="submit" onClick={handleClearQueue}>
-                                </button>
+                            <div className='queue-buttons flex flex-row items-center justify-center'>
+                                <div className='submit-track-back flex items-center justify-center'>
+                                    <button className='submit-track items-center justify-center' type="submit" onClick={handleQueue}>
+                                    </button>
+                                </div>
+                                <div className='clear-track-back flex items-center justify-center'>
+                                    <button className='clear-track items-center justify-center' type="submit" onClick={handleClearQueue}>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         
-                        <div className='songcontrols flex flex-col basis-1/6 justify-items-center justify-center'>
-                            <div className='genButtons flex flex-row justify-items-center'>
-                                <div className='flex basis-4/5 justify-center items-end'>
-                                    {VolumeKnob(volume, handleVolume)}
-                               </div>
-                                <div className='flex power-button-back basis-1/5 justify-center items-end'>
-                                    <div className='power-btn-bg justify-center items-center flex'>
-                                        <button className='flex power-button justify-center align-middle' onClick={loadJukebox}>
-                                            <Image src={'/powerbutton.png'} 
-                                                width="20"
-                                                height="20"
-                                                className="w-auto h-auto"
-                                                alt='powerbtn'
-                                            />
-                                        </button> 
-                                    </div>
-                                </div> 
+                        <div className='genButtons flex flex-row basis-1/6 place-items-center'>
+                            <div className="flex basis-4/5 knobBack">
+                                <Knob
+                                    style={{ width: "100%", height: "100%" }}
+                                    min={0}
+                                    max={100}
+                                    value={volume}
+                                    preciseMode={false}
+                                    onChange={handleVolume}
+                                    skin={knobSkin}
+                                />
                             </div>
+                            <div className='flex power-button-back basis-1/5 justify-center items-end'>
+                                <div className='power-btn-bg justify-center items-center flex'>
+                                    <button className='flex power-button justify-center align-middle' onClick={loadJukebox}>
+                                        <Image 
+                                            src={'/powerbutton.png'} 
+                                            width="20"
+                                            height="20"
+                                            className="w-auto h-auto"
+                                            alt='powerbtn'
+                                        />
+                                    </button> 
+                                </div>
+                            </div> 
                         </div>
                     </div>
+
                     <div className='trackselector flex flex-row text-xs'>
                         {BuildPlaylistCard(token, leftbackPlaylist, index, 'left-back', leftBackRef, ()=>{}, flipState)}
                         {BuildPlaylistCard(token, leftPlaylist, index, 'left', leftBackRef, handleScrollLeft, flipState)}
                         {BuildPlaylistCard(token, rightPlaylist, index+1, 'right', rightBackRef, handleScrollRight, flipState)}
                         {BuildPlaylistCard(token, rightbackPlaylist, index+1, 'right-back', rightBackRef, ()=>{}, flipState)}
                     </div>
+                </div>
+                <div className='coinslotcontainer flex place-content-end'>
+                        <Image 
+                            src={'/coinslot.png'}
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="w-8/12 h-auto"
+                            priority="true"
+                            alt='coinslot'
+                        />
                 </div>
             </div>
          </>

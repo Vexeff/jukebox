@@ -17,7 +17,7 @@ export default function Home() {
         
         {Button({ 
           buttontext: 'Müzik kutusunu aç', 
-          onClick: () => signIn('spotify', { callbackUrl: '/playlists' })
+          onClick: () => signIn('spotify', { callbackUrl: '/jukebox' })
         })}
         
       </main>
