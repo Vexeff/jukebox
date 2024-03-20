@@ -5,7 +5,6 @@ import styles from '../../styles/Jukebox.css';
 import Image from "next/image"
 import jukeboxImg from '/public/jukebox-main.png'
 import Marquee from 'react-fast-marquee';
-import { stringify } from 'querystring';
 import { digitBoard, transferPlayback, findTrack, changeVolume } from './jukeboxUtils'
 import { getPlaylists, BuildPlaylistCard } from '@/app/utils/playlist';
 import { Knob } from "react-rotary-knob";
@@ -46,7 +45,6 @@ export const JukeboxPlayer = (token) => {
     const leftBackRef = useRef();
     const rightBackRef = useRef();
     
-    
     async function fetchPlaylists() {
         const data = await getPlaylists(token)
         let { 'total': total_res, 'playlists': playlists_res } = data
@@ -56,14 +54,9 @@ export const JukeboxPlayer = (token) => {
         setPlaylists(playlists_res)
     }
 
-    function loadJukebox(){
-        if (deviceId){
-            if (!is_active){
-                transferPlayback(token, deviceId)
-                fetchPlaylists()
-            }else{
-                setCoins((prevCoins) => prevCoins + 1)
-            }
+    function handleCoinButton(){
+        if (is_active){
+            setCoins((prevCoins) => prevCoins + 1)
         }
     }
 
@@ -112,12 +105,7 @@ export const JukeboxPlayer = (token) => {
     }
 
     function handleQueue(){
-        if (!playlists){
-            setDigitData('Jukebox is disconnected.')
-            setTimeout(() => {
-                setDigitData('')
-            }, 2000);
-        }else{
+        if (digitData){
             let playlistIndex = digitData.substring(0,2)
             let trackIndex = digitData.substring(2,5)
 
@@ -156,9 +144,10 @@ export const JukeboxPlayer = (token) => {
     }
 
     function handleNumberChange(newNumber) {
-        if ((digitData != 'Jukebox is disconnected.') && (digitData != 'Queue successful.') && (digitData != 'Invalid request.'))
+        if (deviceId && !digitData.includes('.')){
             setDigitData((prevNumber) => prevNumber + newNumber)
-        };
+        }
+    }
 
     useEffect(() => {
         if (token){
@@ -239,7 +228,7 @@ export const JukeboxPlayer = (token) => {
                 setrightbackPlaylist([])
             } 
         }
-    }, [index, playlists])
+    }, [index, playlists, total])
 
     useEffect(() => {
         if (volume && is_active){
@@ -255,6 +244,16 @@ export const JukeboxPlayer = (token) => {
             }, 1000);
         }
     }, [coins])
+
+    useEffect(() => {
+        if (!deviceId){
+            setDigitData('Loading your library...')
+        }else{
+            setDigitData('')
+            transferPlayback(token, deviceId)
+            fetchPlaylists()
+        }
+    }, [deviceId])
 
     return (
         <>
@@ -372,7 +371,7 @@ export const JukeboxPlayer = (token) => {
                             alt='coinslot'
                         />
                         <div className='coinslot-btn-back flex place-content-center'>
-                            <button className='coinslot-btn flex self-center'  onClick={loadJukebox}>
+                            <button className='coinslot-btn flex self-center'  onClick={handleCoinButton}>
                             </button>
                         </div>
                 </div>

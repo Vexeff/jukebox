@@ -5,7 +5,6 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import navigationOptions from '../../utils/navigation'
 import { signOut } from 'next-auth/react';
-import Link from 'next/link';
 
 
 interface ButtonData {
