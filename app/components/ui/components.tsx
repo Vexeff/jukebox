@@ -26,7 +26,7 @@ export function Myheader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="bg-gray-900">
+    <header className="bg-gray-900 min-w-1024 min-w-[1024px]">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex flex-1">
           <div className="hidden lg:flex lg:gap-x-12">
