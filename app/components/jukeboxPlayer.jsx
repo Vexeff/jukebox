@@ -6,7 +6,7 @@ import Image from "next/image"
 import jukeboxImg from '/public/jukebox-main.png'
 import Marquee from 'react-fast-marquee';
 import digitBoard from '../utils/jukeboxUtils'
-import  getPlaylists, { BuildPlaylistCard, transferPlayback, queueTrack } from '@/app/utils/spotifyUtils';
+import  getPlaylists, { BuildPlaylistCard, transferPlayback, queueTrack, getCurrentUser } from '@/app/utils/spotifyUtils';
 import { Knob } from "react-rotary-knob";
 import knobSkin from './ui/knobskin'
 import { useSession } from 'next-auth/react'
@@ -162,6 +162,9 @@ export const JukeboxPlayer = () => {
 
     useEffect(() => {
         if (token){
+
+            // get user data
+            getCurrentUser(token)
 
             const script = document.createElement("script");
             script.src = "https://sdk.scdn.co/spotify-player.js";
