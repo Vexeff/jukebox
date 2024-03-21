@@ -330,7 +330,7 @@ export const JukeboxPlayer = () => {
                                 <Marquee direction='left' className='nowplaying flex-shrink-0 basis-1/3'>
                                     <div className='nowplaying text-left flex flex-col'>
                                         <div className='nowplaying text-left flex flex-row'> 
-                                            {is_active && <div>&nbsp;Now playing:&nbsp;</div>} { current_track.artists[0].name } 
+                                            {is_active && <div>&nbsp;{is_paused ? 'Paused' : "Now playing"}:&nbsp;</div>} { current_track.artists[0].name } 
                                             {is_active && <div>&nbsp;-&nbsp;</div>} 
                                             { current_track.name }
                                         </div>

@@ -145,7 +145,7 @@ export function BuildPlaylistCard(
     key={playlist.id+identity} 
     className={`${identity} ${identity}-${flipState} playlistcontainer flex flex-col`}>
       <div className="playlistmetas flex flex-row">
-        <div className="playlistname basis-2/3">
+        <div className="playlistname basis-2/3 text-wrap text-ellipsis overflow-hidden">
           {playlist.name}
         </div>
         <div className="playlistnumber basis-1/3 text-2xl">
