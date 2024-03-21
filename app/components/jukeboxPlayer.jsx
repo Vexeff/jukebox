@@ -9,6 +9,7 @@ import digitBoard from '../utils/jukeboxUtils'
 import  getPlaylists, { BuildPlaylistCard, transferPlayback, queueTrack } from '@/app/utils/spotifyUtils';
 import { Knob } from "react-rotary-knob";
 import knobSkin from './ui/knobskin'
+import { useSession } from 'next-auth/react'
 
 const track = {
     name: "",
@@ -22,8 +23,11 @@ const track = {
     ]
 }
 
-export const JukeboxPlayer = (token) => {
+export const JukeboxPlayer = () => {
 
+    const { data: session } = useSession()
+    const token = session?.accessToken
+    
     const [player, setPlayer] = useState(undefined);
     const [is_paused, setPaused] = useState(true);
     const [is_active, setActive] = useState(false);

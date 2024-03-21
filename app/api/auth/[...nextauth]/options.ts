@@ -21,6 +21,7 @@ declare module 'next-auth/jwt' {
 
 const scopes = [
     "user-read-private",
+    "user-read-email",
     "playlist-read-private",
     "playlist-read-collaborative",
     "user-read-currently-playing",
