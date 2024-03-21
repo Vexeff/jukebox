@@ -155,9 +155,12 @@ export function BuildPlaylistCard(
       <div className="flex flex-row playlistinfo">
         <div className={`tracklist ${identity}-tracklist`} ref={ref} onScroll={scrollEvent}>
           <ol className="list-decimal">
-            {tracklist.map((item, index_) => (
+            {tracklist.map((item, index_) => ( item.track ? 
               <li key={item.track.id+index_} className="relative">
                 {item.track.name}      
+              </li> : 
+                <li key={index_} className="relative">
+                'Unknown'      
               </li>
             ))}
           </ol>
