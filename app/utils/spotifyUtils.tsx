@@ -157,10 +157,10 @@ export function BuildPlaylistCard(
           <ol className="list-decimal">
             {tracklist.map((item, index_) => ( item.track ? 
               <li key={item.track.id+index_} className="relative">
-                {item.track.name ? item.track.name : Unknown}      
+                {item.track.name ? item.track.name : 'Unknown'}      
               </li> : 
                 <li key={index_} className="relative">
-                'Unknown'      
+                Unknown     
               </li>
             ))}
           </ol>
