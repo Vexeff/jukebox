@@ -68,7 +68,6 @@ export async function getPlaylist(token: string, playlistId: string){
             if (!response.ok) {
               throw new Error('Network response was not ok'); // Handle non-200 responses
             }
-            console.log(`Response was okay. Got playlist with id: ${playlistId}`)
             return response.json()}); // Parse JSON from response body
   return response
 }
@@ -83,7 +82,6 @@ export default async function getPlaylists(token: string){
   if (!response.ok) {
     throw new Error('Network response was not ok'); // Handle non-200 responses
   }
-  console.log('Response was okay. Got max 50 user playlists.');
   const data = await response.json();
   let { total, 'items': playlists } = data;
   
@@ -119,15 +117,19 @@ export function BuildPlaylistCard(
         // check the status and data of the response
         const { 'tracks': trackData } = await getPlaylist(token, playlist.id);
         const tracks: trackData[] = trackData.items;
-        const artwork_url = playlist.images[0].url;
 
+        let artwork_url = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
+
+        if (playlist.images){
+          artwork_url = playlist.images[0].url;
+        }
+        
          // update the state with the tracks
         setTracklist(tracks);
         // update artworkUrl
         setArtworkUrl(artwork_url)
         setIndex(givenIndex)
     }
-
 
     // only call fetchPlaylist if playlist is not null or undefined
     if (playlist.id) {
@@ -136,7 +138,7 @@ export function BuildPlaylistCard(
 
   }, [token, playlist]);
 
-  if (!(playlist.id && artworkUrl && (tracklist.length != 0))){
+  if (!(playlist.id && artworkUrl)){
     return <></>
   }
 
@@ -188,7 +190,6 @@ export async function transferPlayback(token: string, deviceId: string) {
           if (!response.ok) {
               throw new Error('Network response was not ok'); // Handle non-200 responses
           }
-          console.log('Response was okay. Transferred playback.')
       })
 }
 
@@ -202,9 +203,7 @@ export async function queueTrack(playlistId: string, trackIndex: string, token:s
 
   if (tracks[trackInd]){
     trackUri = tracks[trackInd].track.uri
-    console.log('Got uri: ', trackUri)
   }else{
-    console.log('Track not found.')
     return(false)
   }
   
@@ -217,10 +216,8 @@ export async function queueTrack(playlistId: string, trackIndex: string, token:s
       })
   
   if (!response.ok) {
-    console.log('Network response was not ok.')
     return(Promise.resolve(false))
   }else{
-    console.log(`Queue successful. Queued ${trackUri}.`)
     return(Promise.resolve(true))
   }
 }
@@ -235,10 +232,6 @@ export async function getCurrentUser(token: string) {
           if (!response.ok) {
               throw new Error('Network response was not ok'); // Handle non-200 responses
           }
-          console.log('Response was okay. Got user data')
           return response.json()
         })
-    console.log('User: ', user.display_name)
-    console.log('User email: ', user.email)
-    console.log('User_id: ', user.id)
 }

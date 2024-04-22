@@ -34,8 +34,7 @@ const params = {
     scope: scopes
 }
 
-const LOGIN_URL = "https://accounts.spotify.com/authorize?" + new URLSearchParams(params).toString();
-
+const LOGIN_URL = "https://accounts.spotify.com/authorize?" + new URLSearchParams(params).toString() + '&show_dialog=true';
 
 async function refreshAccessToken(token: JWT) {
     const params = new URLSearchParams()

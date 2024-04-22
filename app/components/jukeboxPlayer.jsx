@@ -54,7 +54,6 @@ export const JukeboxPlayer = () => {
         let { 'total': total_res, 'playlists': playlists_res } = data
         
         setTotal(total_res)
-        console.log('total is: ', total)
         setPlaylists(playlists_res)
     }
 
@@ -65,17 +64,31 @@ export const JukeboxPlayer = () => {
     }
 
     function nextPlaylist() {
+        if (total < 3){
+            setDigitData(`You only have ${total} playlists.`)
+            setTimeout(() => {
+                setDigitData('')
+            }, 2000);
+            return
+        }
         if (index < total + 1){
             setFlipstate('next')
             setIndex(Math.min((index + 2), total-2));
-        }
+        }   
     }
     
     function prevPlaylist() {
-        if (index > 1){
+        if (total < 3){
+            setDigitData(`You only have ${total} playlists.`)
+            setTimeout(() => {
+                setDigitData('')
+            }, 2000);
+            return
+        }
+        if (index > 0){
             setFlipstate('prev')
             setIndex(Math.max((index - 2), 0));
-        }
+        }   
     }
 
     function nextTrack(){
@@ -112,7 +125,6 @@ export const JukeboxPlayer = () => {
         if (digitData){
             let playlistIndex = digitData.substring(0,2)
             let trackIndex = digitData.substring(2,5)
-            console.log('Track index: ', trackIndex)
 
             if (playlistIndex.length != 2 || digitData.length < 3 || digitData.length > 5){
                 setDigitData('Invalid request.')
@@ -126,8 +138,7 @@ export const JukeboxPlayer = () => {
                 }, 2000);
             }else{
                 queueTrack(playlists[Number(playlistIndex)].id, trackIndex, token).then(response => 
-                {   console.log('response: ', response)
-                    if (response){
+                {   if (response){
                         setDigitData('Queue successful. You have ' + (coins-1) + ' requests left.')
                         setCoins((prevCoins) => prevCoins - 1)
                         setTimeout(() => {
@@ -209,9 +220,7 @@ export const JukeboxPlayer = () => {
 
                 player.getVolume().then(currVolume => {
                     setVolume(currVolume*100)
-                    console.log(`The volume of the player is ${currVolume}%`);
-                  });
-                
+                });
 
                 player.connect();
 
