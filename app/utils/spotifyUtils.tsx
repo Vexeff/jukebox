@@ -232,15 +232,13 @@ export async function queueTrack(playlistId: string, trackIndex: string, token:s
 }
 
 export async function getCurrentUser(token: string) {
-  const user = await fetch('https://api.spotify.com/v1/me', {
+  const res = await fetch('https://api.spotify.com/v1/me', {
           method: 'GET',
           headers: {
               Authorization: `Bearer ${token}`
           }
-      }).then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok'); // Handle non-200 responses
-          }
-          return response.json()
-        })
+      })
+  
+  const user = await res.json()
+  return user
 }

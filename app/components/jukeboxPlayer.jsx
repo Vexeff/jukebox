@@ -28,6 +28,7 @@ export const JukeboxPlayer = () => {
     const { data: session } = useSession()
     const token = session?.accessToken
     
+    const [premium, setPremium] = useState(false)
     const [player, setPlayer] = useState(undefined);
     const [is_paused, setPaused] = useState(true);
     const [is_active, setActive] = useState(false);
@@ -47,6 +48,7 @@ export const JukeboxPlayer = () => {
     const [volumeDisplay, setVolumeDisplay] = useState('')
     const [coins, setCoins] = useState(0)
     const [coinsDisplay, setCoinsDisplay] = useState(coins)
+    const [infoHover, setInfoHover] = useState(false)
     const leftBackRef = useRef();
     const rightBackRef = useRef();
     
@@ -173,11 +175,26 @@ export const JukeboxPlayer = () => {
     }
 
     useEffect(() => {
-        if (token){
 
-            // get user data
-            getCurrentUser(token)
+        async function checkUserStat(token){
+            const { product } = await getCurrentUser(token)
+            return (product === 'free') ? false : true
+        }
 
+        if (token && !premium){
+            checkUserStat(token).then( (res) => {
+                if (res){
+                    setPremium(true)
+                }else{ 
+                    setPremium(false)
+                    setDigitData('This product is only available for Spotify Premium users.')
+        }})
+        }
+    }, [token, premium])
+
+    useEffect(() => {
+        if (token && premium){
+            
             const script = document.createElement("script");
             script.src = "https://sdk.scdn.co/spotify-player.js";
             script.async = true;
@@ -236,7 +253,7 @@ export const JukeboxPlayer = () => {
             };
         }
 
-    }, [token]);
+    }, [token, premium]);
 
     useEffect(() => {
         if (playlists){
@@ -307,9 +324,23 @@ export const JukeboxPlayer = () => {
                 <div className='jukeboxpanel'>
                     <div className='controlpanel flex flex-row'>
                         <div className='playlistcontrols flex flex-col basis-1/6 place-content-end'>
+                            <div 
+                            onMouseEnter={() => setInfoHover(true)}
+                            onMouseLeave={() => setInfoHover(false)}
+                            className='place-self-start absolute top-1 left-2 info-button flex'>
+                                &#9432;
+                                {infoHover && 
+                                <div className=' bg-orange-300 z-50 text-sm p-2 min-w-10 absolute w-48 text-left'> 
+                                    Click on Spotify logo to play track on Spotify. <br />
+                                    Click on playlist artwork to play track on Spotify. <br />
+                                    Follow instructions on Marquee to queue songs from your playlists. Tip: playlist numbers should be zero-padded. <br />
+                                    Max. limit of 50 playlists and 100 tracks per playlists. <br />
+                                    Don&apos;t forget the coins!
+                                </div>}
+                            </div>
                             <div className='playlist-nav-btns h-full flex flex-row place-content-center self-center'>
-                                <div className='playlist-nav-btn-back place-content-center self-center'>
-                                    <button className='playlist-nav-btn place-content-center' onClick={prevPlaylist}>
+                                <div className='playlist-nav-btn-back self-center'>
+                                    <button className='playlist-nav-btn' onClick={prevPlaylist}>
                                         ◄
                                     </button>
                                 </div>

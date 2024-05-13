@@ -25,6 +25,10 @@
   overflow: hidden;
 }
 
+.info-button{
+  max-width: 10%;
+}
+
 .playlist-nav-btn-back{
   background-color: darkgreen;
   border-radius: 4px;
@@ -38,7 +42,7 @@
 .playlist-nav-btn {
   background-image: linear-gradient(rgb(228, 220, 220), rgb(7, 212, 7), darkgreen);
   border-radius: 4px;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   width: 100%;
   height: 100%;
 }

@@ -81,7 +81,6 @@ export const options: NextAuthOptions = {
             if (token.accessTokenExpires && (Date.now() < (token.accessTokenExpires * 1000))){
                 return token
             }
-            
             return await refreshAccessToken(token)
         },
 
