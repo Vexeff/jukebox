@@ -9,9 +9,9 @@ export default function Page(){
 
   return (
     <main>
-        {Myheader()}
       <div className={styles.container}>
-          {JukeboxPlayer()}
+        {Myheader()}
+        {JukeboxPlayer()}
       </div>
     </main>
   );

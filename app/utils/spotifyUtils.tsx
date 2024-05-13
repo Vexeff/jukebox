@@ -2,6 +2,7 @@
 
 import { UIEventHandler, useEffect, useState } from "react";
 
+
 export interface SpotifyPlaylist{
   id: string,
   name: string, 
@@ -100,7 +101,11 @@ export function BuildPlaylistCard(
 
   const [tracklist, setTracklist ] = useState([] as trackData[])
   const [artworkUrl, setArtworkUrl ] = useState('')
+  const artworkPallette = '#191414'
   const [index, setIndex] = useState(0);
+  
+  const apiKey = 'acc_dca6cc13d468e41';
+  const apiSecret = 'ddb670fbd24f5e1f598bfc39e4a3e888';
 
   /**
    * identity is left or right
@@ -122,7 +127,7 @@ export function BuildPlaylistCard(
 
         if (playlist.images){
           artwork_url = playlist.images[0].url;
-        }
+          }
         
          // update the state with the tracks
         setTracklist(tracks);
@@ -142,10 +147,11 @@ export function BuildPlaylistCard(
     return <></>
   }
 
+
   return (
     <div 
     key={playlist.id+identity} 
-    className={`${identity} ${identity}-${flipState} playlistcontainer flex flex-col`}>
+    className={`${identity} ${identity}-${flipState} playlistcontainer bg-[${artworkPallette}] flex flex-col`}>
       <div className="playlistmetas flex flex-row">
         <div className="playlistname basis-2/3 text-wrap text-ellipsis overflow-hidden">
           {playlist.name}
@@ -154,7 +160,7 @@ export function BuildPlaylistCard(
           {index.toString().padStart(2, '0')}
         </div>
       </div>
-      <div className="flex flex-row playlistinfo">
+      <div className={`flex flex-row playlistinfo`}>
         <div className={`tracklist ${identity}-tracklist`} ref={ref} onScroll={scrollEvent}>
           <ol className="list-decimal">
             {tracklist.map((item, index_) => ( item.track ? 
@@ -167,8 +173,9 @@ export function BuildPlaylistCard(
             ))}
           </ol>
         </div>
-        <div className="playlistcover">
-          <img src={artworkUrl} alt="" className="object-contain object-right-top" />
+        <div className="playlistcover flex-col">
+          <img src={artworkUrl} alt="artwork" className="object-contain object-right-top" />
+          {/* <img src={'/spotify.png'} alt='spotify-logo' className="my-5 object-contain object-right-top"/> */}
         </div>
       </div>
     </div>

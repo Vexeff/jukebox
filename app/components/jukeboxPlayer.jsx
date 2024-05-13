@@ -331,7 +331,7 @@ export const JukeboxPlayer = () => {
                         </div>
                        
                        
-                        <div className='nowplaying-container flex flex-shrink-0 basis-1/3 justify-center items-center'>
+                        <div className='nowplaying-container bg-[#191414] flex flex-shrink-0 basis-1/3 justify-center items-center'>
                             {
                                 (digitData || volumeDisplay || coinsDisplay) ? 
                                 (volumeDisplay) ?  
@@ -409,6 +409,9 @@ export const JukeboxPlayer = () => {
                             <button className='coinslot-btn flex self-center'>
                             </button>
                         </div>
+                </div>
+                <div className='spotify-logo-cont rounded-3xl'>
+                    <img src={'/spotify.png'} alt='spotify-logo' className="spotify-logo min-w-[26] bg-yellow-300 rounded-full bg-opacity-80"/>
                 </div>
             </div>
          </>

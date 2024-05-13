@@ -24,12 +24,9 @@ export const Button = (data: ButtonData)  => {
 
 export function Myheader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  /* overflow: hidden; /* Keep this line 
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;*/
+  // #533A3A 
   return (
-    <header className="min-w-[1024px] w-full bg-black z-10 absolute opacity-0 duration-0 hover:opacity-100 hover:relative">
+    <header className="min-w-[1024px] w-full bg-transparent">
       <nav className="flex mx-auto max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex flex-1">
           <div className="hidden lg:flex lg:gap-x-12">
