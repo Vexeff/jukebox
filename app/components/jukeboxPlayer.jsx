@@ -332,7 +332,7 @@ export const JukeboxPlayer = () => {
                                 {infoHover && 
                                 <div className=' bg-orange-300 z-50 text-sm p-2 min-w-10 absolute w-48 text-left'> 
                                     Click on Spotify logo to play track on Spotify. <br />
-                                    Click on playlist artwork to play track on Spotify. <br />
+                                    Click on playlist artwork to play currently playing track on Spotify. <br />
                                     Follow instructions on Marquee to queue songs from your playlists. Tip: playlist numbers should be zero-padded. <br />
                                     Max. limit of 50 playlists and 100 tracks per playlists. <br />
                                     Don&apos;t forget the coins!
