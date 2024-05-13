@@ -61,7 +61,7 @@ export interface tracklistData {
 }
 
 export async function getPlaylist(token: string, playlistId: string){
-  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}?fields=name,tracks(href,total,items)`, {                    
+  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}?fields=name,tracks(href,total,items),external_urls`, {                    
               headers: {
                   Authorization: `Bearer ${token}`
               }
@@ -101,6 +101,7 @@ export function BuildPlaylistCard(
 
   const [tracklist, setTracklist ] = useState([] as trackData[])
   const [artworkUrl, setArtworkUrl ] = useState('')
+  const [ playlistUrl, setPlaylisturl ] = useState('')
   const artworkPallette = '#191414'
   const [index, setIndex] = useState(0);
   
@@ -120,7 +121,7 @@ export function BuildPlaylistCard(
     // call getPlaylist inside useEffect to avoid calling it on every render
     async function fetchPlaylist() {
         // check the status and data of the response
-        const { 'tracks': trackData } = await getPlaylist(token, playlist.id);
+        const { 'tracks': trackData, 'external_urls': playlist_url} = await getPlaylist(token, playlist.id);
         const tracks: trackData[] = trackData.items;
 
         let artwork_url = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
@@ -129,6 +130,7 @@ export function BuildPlaylistCard(
           artwork_url = playlist.images[0].url;
           }
         
+        setPlaylisturl(playlist_url.spotify)
          // update the state with the tracks
         setTracklist(tracks);
         // update artworkUrl
@@ -174,8 +176,8 @@ export function BuildPlaylistCard(
           </ol>
         </div>
         <div className="playlistcover flex-col">
-          <img src={artworkUrl} alt="artwork" className="object-contain object-right-top" />
-          {/* <img src={'/spotify.png'} alt='spotify-logo' className="my-5 object-contain object-right-top"/> */}
+          <a href={playlistUrl} target='_blank' onClick={() => {return confirm(`Open ${playlistUrl} in new tab?`)}}>
+          <img src={artworkUrl} alt="artwork" className="object-contain object-right-top" /></a>
         </div>
       </div>
     </div>

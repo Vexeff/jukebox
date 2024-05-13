@@ -32,6 +32,7 @@ export const JukeboxPlayer = () => {
     const [is_paused, setPaused] = useState(true);
     const [is_active, setActive] = useState(false);
     const [current_track, setTrack] = useState(track);
+    const [trackUrl, setTrackUrl] = useState('')
     const [deviceId, setDeviceid] = useState('')
     const [index, setIndex] = useState(0)
     const [total, setTotal] = useState(0)
@@ -208,8 +209,16 @@ export const JukeboxPlayer = () => {
                     if (!state) {
                         return;
                     }
-                
-                    setTrack(state.track_window.current_track);
+                    
+                    
+                    // get track
+                    let curr_track = state.track_window.current_track
+                    // get track url
+                    let track_url = `https://open.spotify.com/${curr_track.uri.split(':')[1]}/${curr_track.uri.split(':')[2]}`
+                    setTrackUrl(track_url)
+
+                    setTrack(curr_track);
+                    
                     setPaused(state.paused);
                 
                 
@@ -411,7 +420,10 @@ export const JukeboxPlayer = () => {
                         </div>
                 </div>
                 <div className='spotify-logo-cont rounded-3xl'>
-                    <img src={'/spotify.png'} alt='spotify-logo' className="spotify-logo min-w-[26] bg-yellow-300 rounded-full bg-opacity-80"/>
+                    <a href={trackUrl} target='_blank' onClick={() => {return confirm(`Open ${trackUrl} in new tab?`)}}>
+                    <img src={'/spotify.png'} 
+                    alt='spotify-logo' 
+                    className="spotify-logo min-w-[26] bg-yellow-300 rounded-full bg-opacity-80"/></a>
                 </div>
             </div>
          </>
