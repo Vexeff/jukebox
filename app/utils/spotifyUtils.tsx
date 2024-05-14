@@ -176,7 +176,7 @@ export function BuildPlaylistCard(
           </ol>
         </div>
         <div className="playlistcover flex-col">
-          <a href={playlistUrl} target='_blank' onClick={() => {return confirm(`Open ${playlistUrl} in new tab?`)}}>
+          <a href={playlistUrl} target='_blank' onClick={(e) => {!confirm(`Open ${playlistUrl} in new tab?`) ? e.preventDefault() : true}}>
           <img src={artworkUrl} alt="artwork" className="object-contain object-right-top" /></a>
         </div>
       </div>

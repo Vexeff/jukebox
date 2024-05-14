@@ -243,10 +243,12 @@ export const JukeboxPlayer = () => {
                     (state)? setActive(true) : setActive(false) 
                     });
                 }));
-
-                player.getVolume().then(currVolume => {
-                    setVolume(currVolume*100)
-                });
+                
+                if (is_active){
+                    player.getVolume().then(currVolume => {
+                        setVolume(currVolume*100)
+                    });
+                }
 
                 player.connect();
 
@@ -451,7 +453,7 @@ export const JukeboxPlayer = () => {
                         </div>
                 </div>
                 <div className='spotify-logo-cont rounded-3xl'>
-                    <a href={trackUrl} target='_blank' onClick={() => {return confirm(`Open ${trackUrl} in new tab?`)}}>
+                    <a href={trackUrl} target='_blank' onClick={(e) => {!confirm(`Open ${trackUrl} in new tab?`) ? e.preventDefault() : true}}>
                     <img src={'/spotify.png'} 
                     alt='spotify-logo' 
                     className="spotify-logo min-w-[26] bg-yellow-300 rounded-full bg-opacity-80"/></a>
