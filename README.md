@@ -7,7 +7,7 @@ Premium account required.
 
 ## Demo
 
-![](https://github.com/vexeff/jukebox/demo.gif)
+![](https://github.com/Vexeff/jukebox/blob/main/demo.gif)
 
 
 ### Functionality
