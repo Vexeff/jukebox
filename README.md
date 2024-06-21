@@ -5,6 +5,11 @@ https://www.dreh-scheibe.com
 This web app opens your Spotify library as a Jukebox, with jukebox functionality built in. \
 Premium account required.
 
+## Demo
+
+![](https://github.com/vexeff/jukebox/demo.gif)
+
+
 ### Functionality
 1. Playlist scrolling: Arrows at the left let you leaf through playlists. 
 2. Song controls: Below the arrows, you can play/pause music, as well as go to next/previous track in the queue. 
