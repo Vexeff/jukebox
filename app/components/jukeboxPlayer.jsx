@@ -23,11 +23,18 @@ const track = {
     ]
 }
 
+const elysse_id = '31s5fyehts6lzcppaev5jxv6mxc4'
+// elysse_id = 'elysse.davega'
+
+
 export const JukeboxPlayer = () => {
 
     const { data: session } = useSession()
     const token = session?.accessToken
     
+
+    const [user, setUser] = useState('')
+    const [isElysse, setIsElysse] = useState(false)
     const [premium, setPremium] = useState(false)
     const [player, setPlayer] = useState(undefined);
     const [is_paused, setPaused] = useState(true);
@@ -310,6 +317,28 @@ export const JukeboxPlayer = () => {
         }
     }, [deviceId])
 
+    useEffect(() => {
+
+        async function get_user(token){
+            const user = await getCurrentUser(token)
+            setUser(user.id)
+            console.log('user: ', user.id)
+        }
+
+        if (token){
+            get_user(token)
+            
+        }
+    }, [token])
+
+    useEffect(() => {
+
+        if (user == elysse_id){
+            setIsElysse(true)
+        }
+
+    }, [user])
+
     return (
         <>
             <div className='jukeboxcontainer'>
@@ -323,7 +352,9 @@ export const JukeboxPlayer = () => {
                     loading='eager'
                     alt='jukebox'
                 />
+                
                 <div className='jukeboxpanel'>
+                {/* {isElysse && <div className='absolute top bg-yellow z-50'> hi elysse </div>} */}
                     <div className='controlpanel flex flex-row'>
                         <div className='playlistcontrols flex flex-col basis-1/6 place-content-end'>
                             <div 

@@ -6,12 +6,11 @@ import JukeboxPlayer from '../components/jukeboxPlayer';
 
 export default function Page(){
 
-
   return (
     <main>
       <div className={styles.container}>
-        {Myheader()}
-        {JukeboxPlayer()}
+        <Myheader />
+        <JukeboxPlayer />
       </div>
     </main>
   );

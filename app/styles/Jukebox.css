@@ -314,7 +314,7 @@
   bottom: 41%;
   right: 11%;
   overflow: hidden;
-  min-width: 34%;
+  width: 34%;
 }
 
 .coinslot-btn-back{
