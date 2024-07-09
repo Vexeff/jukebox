@@ -1,5 +1,3 @@
-'use client'
-
 import styles from '../styles/Home.module.css';
 import Myheader from "../components/ui/components";
 import JukeboxPlayer from '../components/jukeboxPlayer';
