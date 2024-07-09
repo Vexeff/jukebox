@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 export default function Home() {
 
   return (
-    <div>
+
       <main className={`${styles.container}`}>
         <div className='flex-col flex absolute top-[10%]'>
 
@@ -24,11 +24,11 @@ export default function Home() {
 
         </div>  
         
-      </main>
 
       <style jsx>{`
         main {
           padding: 5rem 0;
+          margin: 0;
           flex: 1;
           display: flex;
           flex-direction: column;
@@ -92,6 +92,6 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
+    </main>
   );
 }
